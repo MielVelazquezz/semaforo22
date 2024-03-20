@@ -36,6 +36,7 @@
 <audio id="audio" src="som.mp3"></audio>
 
 <script>
+
     const c = document.getElementById("matrix");
     const ctx = c.getContext("2d");
     c.height = window.innerHeight;
@@ -46,7 +47,7 @@
         "ｻ", "ﾜ", "ﾂ", "ｵ", "ﾘ", "ｱ", "ﾎ", "ﾃ", "ﾏ", "ｹ", 
         "ﾒ", "ｴ", "ｶ", "ｷ", "ﾑ", "ﾕ", "ﾗ", "ｾ", "ﾈ", "ｽ", 
         "ﾀ", "ﾇ", "ﾍ", ":", "・", ".", "=", "*", "+", "-", 
-        "<", ">", "¦", "｜", "ﾘ", "!", "@", "#", "$", "%"
+        "<", ">", "¦", "｜", "ﾘ"
     ];
 
     const fontSize = 15;
@@ -93,21 +94,26 @@
                 const color = getColor(data[0].res);
                 if (lastRes !== color.toString()) {
                     lastRes = color.toString();
-                    playSound(); // Chama a função playSound quando houver uma alteração na cor
+                    playSound(); 
+                    draw(color);
                 }
-                draw(color);
             })
-            .catch(error => console.error('Error fetching API:', error));
+            .catch(error => console.error('Error fetching API:', error))
+            .finally(() => {
+                setTimeout(fetchColor, 5000); // Buscar dados da API a cada 5 segundos
+            });
     }
 
     function getColor(res) {
         switch (res) {
             case 'L':
-                return [0, 255, 0]; // Verde
+                return [0, 255, 0]; // verde
             case 'B':
-                return [255, 0, 0]; // Vermelho
+                return [255, 0, 0]; // vermelho
             case 'A':
-                return [255, 255, 0]; // Amarelo
+                return [255, 255, 0]; // amarelo
+            default:
+                return [255, 255, 255]; // branco padrão
         }   
     }
 
