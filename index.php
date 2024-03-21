@@ -94,13 +94,13 @@
                 const color = getColor(data[0].res);
                 if (lastRes !== color.toString()) {
                     lastRes = color.toString();
-                    playSound(); 
                     draw(color);
                 }
             })
             .catch(error => console.error('Error fetching API:', error))
             .finally(() => {
-                setTimeout(fetchColor, 5000); // Buscar dados da API a cada 5 segundos
+                setTimeout(fetchColor, 5000);
+                playSound(); 
             });
     }
 
